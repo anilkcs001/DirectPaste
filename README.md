@@ -2,7 +2,7 @@
 
 ## 1. Extension name and purpose
 
-**AML Direct Paste** (Per-Tenant Extension, Business Central 2024 Wave 2 / v25, IN localisation)
+**AML Direct Paste** (Per-Tenant Extension, Business Central 2026 release wave 1 / v28, IN localisation)
 
 Users copy rows from Excel (or a CSV file, or a table on a web page) and paste them into a FactBox. Direct Paste then:
 
@@ -60,7 +60,7 @@ AMLDirectPaste/
 
 ## 3. Dependencies
 
-- Base Application and System Application v25 (no extra extension dependencies).
+- Base Application and System Application v28 (no extra extension dependencies).
 - No external APIs and no Azure services. Everything runs inside the BC web client and server.
 - India Tax Engine: not a dependency, but its subscribers run during the dry run and the import because Direct Paste uses `Validate` and `Insert(true)`.
 
