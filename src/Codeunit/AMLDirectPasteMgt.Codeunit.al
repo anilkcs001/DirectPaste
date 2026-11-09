@@ -1,5 +1,5 @@
 /// <summary>
-/// Generic engine behind Magic Paste. Works on any table through RecordRef:
+/// Generic engine behind Direct Paste. Works on any table through RecordRef:
 ///   - builds the field metadata the mapper shows
 ///   - dry-runs every pasted row (real insert with triggers, then rolled back) to collect errors
 ///   - inserts the rows for real, committing every 100 records
@@ -7,26 +7,26 @@
 /// The host page supplies the target table and "context" fields (for example Document Type and
 /// Document No. of the current Sales Header). Context fields are set on every row and hidden from mapping.
 /// </summary>
-codeunit 87300 "AML Magic Paste Mgt."
+codeunit 87300 "AML Direct Paste Mgt."
 {
     Access = Public;
-    Permissions = tabledata "AML Magic Paste Field Map" = RIMD,
-                  tabledata "AML Magic Paste Template" = RIMD,
-                  tabledata "AML Magic Paste Template Line" = RIMD;
+    Permissions = tabledata "AML Direct Paste Field Map" = RIMD,
+                  tabledata "AML Direct Paste Template" = RIMD,
+                  tabledata "AML Direct Paste Template Line" = RIMD;
 
     var
         TooLongErr: Label '%1: the value is longer than %2 characters.', Comment = '%1 = field caption, %2 = maximum length';
         InvalidValueErr: Label '%1: ''%2'' is not a valid value.', Comment = '%1 = field caption, %2 = pasted value';
         UnknownOptionErr: Label '%1: ''%2'' is not a valid option. Use one of: %3', Comment = '%1 = field caption, %2 = pasted value, %3 = list of options';
-        FieldNotAllowedErr: Label 'Field %1 cannot be imported with Magic Paste.', Comment = '%1 = field number';
+        FieldNotAllowedErr: Label 'Field %1 cannot be imported with Direct Paste.', Comment = '%1 = field number';
         AutoNumberTxt: Label 'Automatic (steps of 10000)';
         TemplateNameErr: Label 'Give the template a name.';
-        NotYourTemplateErr: Label 'Template %1 was saved by %2. Only that user can delete it here; an administrator can delete it on the Magic Paste Templates page.', Comment = '%1 = template name, %2 = user ID';
+        NotYourTemplateErr: Label 'Template %1 was saved by %2. Only that user can delete it here; an administrator can delete it on the Direct Paste Templates page.', Comment = '%1 = template name, %2 = user ID';
         FieldValueTxt: Label '%1 ''%2''', Comment = '%1 = field caption, %2 = value being validated';
         LastFieldText: Text;
         RowErrorTxt: Label '%1: %2', Comment = '%1 = field caption and value, %2 = error message', Locked = true;
 
-    /// <summary>Adds one field of RecRef to the context dictionary that the host page passes to Magic Paste.</summary>
+    /// <summary>Adds one field of RecRef to the context dictionary that the host page passes to Direct Paste.</summary>
     procedure AddContextField(var Context: Dictionary of [Integer, Text]; var RecRef: RecordRef; FieldNo: Integer)
     var
         FldRef: FieldRef;
@@ -51,7 +51,7 @@ codeunit 87300 "AML Magic Paste Mgt."
     /// <summary>All templates for the table: [{ id, name, createdBy, mine, useCount, lines: [{ fieldNo, header, defaultValue }] }].</summary>
     procedure BuildTemplatesJson(TableNo: Integer) TemplatesJson: JsonArray
     var
-        Template: Record "AML Magic Paste Template";
+        Template: Record "AML Direct Paste Template";
     begin
         Template.SetCurrentKey("Table No.", Name);
         Template.SetRange("Table No.", TableNo);
@@ -63,7 +63,7 @@ codeunit 87300 "AML Magic Paste Mgt."
 
     procedure CountTemplates(TableNo: Integer): Integer
     var
-        Template: Record "AML Magic Paste Template";
+        Template: Record "AML Direct Paste Template";
     begin
         Template.SetRange("Table No.", TableNo);
         exit(Template.Count());
@@ -75,8 +75,8 @@ codeunit 87300 "AML Magic Paste Mgt."
     /// </summary>
     procedure SaveTemplate(TableNo: Integer; Context: Dictionary of [Integer, Text]; TemplateJson: JsonObject): Integer
     var
-        Template: Record "AML Magic Paste Template";
-        TemplateLine: Record "AML Magic Paste Template Line";
+        Template: Record "AML Direct Paste Template";
+        TemplateLine: Record "AML Direct Paste Template Line";
         Token: JsonToken;
         Item: JsonToken;
         TemplateName: Text[100];
@@ -117,7 +117,7 @@ codeunit 87300 "AML Magic Paste Mgt."
     /// <summary>Deletes a template. Only the user who saved it can delete it from the mapper; others use the Templates list page.</summary>
     procedure DeleteTemplate(TableNo: Integer; TemplateId: Integer)
     var
-        Template: Record "AML Magic Paste Template";
+        Template: Record "AML Direct Paste Template";
     begin
         if not Template.Get(TemplateId) then
             exit;
@@ -131,7 +131,7 @@ codeunit 87300 "AML Magic Paste Mgt."
     /// <summary>Counts a use of the template named in the ImportSet ("templateId"), if any.</summary>
     procedure MarkTemplateUsed(ImportSet: JsonObject)
     var
-        Template: Record "AML Magic Paste Template";
+        Template: Record "AML Direct Paste Template";
         TemplateId: Integer;
     begin
         TemplateId := GetJsonInt(ImportSet, 'templateId');
@@ -144,9 +144,9 @@ codeunit 87300 "AML Magic Paste Mgt."
         Template.Modify();
     end;
 
-    local procedure SetTemplateLine(var Template: Record "AML Magic Paste Template"; FieldNo: Integer; ValueText: Text; IsDefault: Boolean)
+    local procedure SetTemplateLine(var Template: Record "AML Direct Paste Template"; FieldNo: Integer; ValueText: Text; IsDefault: Boolean)
     var
-        TemplateLine: Record "AML Magic Paste Template Line";
+        TemplateLine: Record "AML Direct Paste Template Line";
     begin
         if not TemplateLine.Get(Template."Entry No.", FieldNo) then begin
             TemplateLine.Init();
@@ -162,9 +162,9 @@ codeunit 87300 "AML Magic Paste Mgt."
         TemplateLine.Modify();
     end;
 
-    local procedure TemplateToJson(var Template: Record "AML Magic Paste Template") Item: JsonObject
+    local procedure TemplateToJson(var Template: Record "AML Direct Paste Template") Item: JsonObject
     var
-        TemplateLine: Record "AML Magic Paste Template Line";
+        TemplateLine: Record "AML Direct Paste Template Line";
         Lines: JsonArray;
     begin
         Item.Add('id', Template."Entry No.");
@@ -180,7 +180,7 @@ codeunit 87300 "AML Magic Paste Mgt."
         Item.Add('lines', Lines);
     end;
 
-    local procedure TemplateLineToJson(var TemplateLine: Record "AML Magic Paste Template Line") Item: JsonObject
+    local procedure TemplateLineToJson(var TemplateLine: Record "AML Direct Paste Template Line") Item: JsonObject
     begin
         Item.Add('fieldNo', TemplateLine."Field No.");
         Item.Add('header', TemplateLine."Source Header");
@@ -193,7 +193,7 @@ codeunit 87300 "AML Magic Paste Mgt."
     /// </summary>
     procedure DryRun(TableNo: Integer; Context: Dictionary of [Integer, Text]; ImportSet: JsonObject; var Errors: JsonArray): Boolean
     var
-        RowCheck: Codeunit "AML Magic Paste Row Check";
+        RowCheck: Codeunit "AML Direct Paste Row Check";
         Rows: JsonArray;
         RowToken: JsonToken;
         Links: List of [Integer];
@@ -261,7 +261,7 @@ codeunit 87300 "AML Magic Paste Mgt."
     /// <summary>Replaces the current user's saved mapping and defaults for the table with the ones in ImportSet.</summary>
     procedure SaveMapping(TableNo: Integer; ImportSet: JsonObject)
     var
-        FieldMap: Record "AML Magic Paste Field Map";
+        FieldMap: Record "AML Direct Paste Field Map";
         Token: JsonToken;
         Item: JsonToken;
         CurrUserId: Code[50];
@@ -298,7 +298,7 @@ codeunit 87300 "AML Magic Paste Mgt."
         exit(Format(TableNo));
     end;
 
-    /// <summary>Builds and inserts one record. Called by Import and, for the dry run, by "AML Magic Paste Row Check".</summary>
+    /// <summary>Builds and inserts one record. Called by Import and, for the dry run, by "AML Direct Paste Row Check".</summary>
     internal procedure ProcessRow(var RecRef: RecordRef; Context: Dictionary of [Integer, Text]; FieldOrder: List of [Integer]; Values: Dictionary of [Integer, Text]; AutoNoFieldNo: Integer; AutoNoValue: Integer)
     var
         FldRef: FieldRef;
@@ -569,7 +569,7 @@ codeunit 87300 "AML Magic Paste Mgt."
 
     local procedure BuildSavedMapJson(TableNo: Integer) SavedJson: JsonArray
     var
-        FieldMap: Record "AML Magic Paste Field Map";
+        FieldMap: Record "AML Direct Paste Field Map";
     begin
         FieldMap.SetRange("User ID", CopyStr(UserId(), 1, MaxStrLen(FieldMap."User ID")));
         FieldMap.SetRange("Table No.", TableNo);
@@ -581,7 +581,7 @@ codeunit 87300 "AML Magic Paste Mgt."
 
     local procedure SetMapLine(UserIdCode: Code[50]; TableNo: Integer; FieldNo: Integer; ValueText: Text; IsDefault: Boolean)
     var
-        FieldMap: Record "AML Magic Paste Field Map";
+        FieldMap: Record "AML Direct Paste Field Map";
     begin
         if not FieldMap.Get(UserIdCode, TableNo, FieldNo) then begin
             FieldMap.Init();
@@ -712,7 +712,7 @@ codeunit 87300 "AML Magic Paste Mgt."
         Item.Add('value', ValueText);
     end;
 
-    local procedure SavedItem(var FieldMap: Record "AML Magic Paste Field Map") Item: JsonObject
+    local procedure SavedItem(var FieldMap: Record "AML Direct Paste Field Map") Item: JsonObject
     begin
         Item.Add('fieldNo', FieldMap."Field No.");
         Item.Add('header', FieldMap."Source Header");

@@ -1,5 +1,5 @@
 /*!
- * AML Magic Paste - helper.js
+ * AML Direct Paste - helper.js
  * Pure utilities, no DOM state:
  *   - clipboard parsing (Excel TSV, CSV, quoted cells, multi-line cells)
  *   - value normalisation into AL XML format (Evaluate(FieldRef, Value, 9))

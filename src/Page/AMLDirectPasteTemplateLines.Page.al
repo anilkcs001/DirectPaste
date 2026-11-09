@@ -1,9 +1,9 @@
-/// <summary>Field lines of a Magic Paste template.</summary>
-page 87304 "AML Magic Paste Template Lines"
+/// <summary>Field lines of a Direct Paste template.</summary>
+page 87304 "AML Direct Paste Template Lines"
 {
     PageType = ListPart;
     Caption = 'Fields';
-    SourceTable = "AML Magic Paste Template Line";
+    SourceTable = "AML Direct Paste Template Line";
     InsertAllowed = false;
 
     layout

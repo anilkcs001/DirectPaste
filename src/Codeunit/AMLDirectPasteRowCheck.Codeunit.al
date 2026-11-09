@@ -6,7 +6,7 @@
 /// Because every run ends in a rollback, no write transaction stays open between rows,
 /// which Codeunit.Run with a return value requires.
 /// </summary>
-codeunit 87301 "AML Magic Paste Row Check"
+codeunit 87301 "AML Direct Paste Row Check"
 {
     Access = Internal;
 
@@ -15,19 +15,19 @@ codeunit 87301 "AML Magic Paste Row Check"
         RecRef: RecordRef;
     begin
         RecRef.Open(TargetTableNo);
-        MagicPasteMgt.ProcessRow(RecRef, Context, FieldOrder, Values, AutoNoFieldNo, AutoNoValue);
+        DirectPasteMgt.ProcessRow(RecRef, Context, FieldOrder, Values, AutoNoFieldNo, AutoNoValue);
         Error(DryRunOkErr);
     end;
 
     var
-        MagicPasteMgt: Codeunit "AML Magic Paste Mgt.";
+        DirectPasteMgt: Codeunit "AML Direct Paste Mgt.";
         Context: Dictionary of [Integer, Text];
         FieldOrder: List of [Integer];
         Values: Dictionary of [Integer, Text];
         TargetTableNo: Integer;
         AutoNoFieldNo: Integer;
         AutoNoValue: Integer;
-        DryRunOkErr: Label 'AML-MAGIC-PASTE-DRY-RUN-OK', Locked = true;
+        DryRunOkErr: Label 'AML-Direct-PASTE-DRY-RUN-OK', Locked = true;
 
     procedure SetRow(NewTableNo: Integer; NewContext: Dictionary of [Integer, Text]; NewFieldOrder: List of [Integer]; NewValues: Dictionary of [Integer, Text]; NewAutoNoFieldNo: Integer; NewAutoNoValue: Integer)
     begin
@@ -42,7 +42,7 @@ codeunit 87301 "AML Magic Paste Row Check"
     /// <summary>Field and value that was being validated when the row failed (kept after the rollback).</summary>
     procedure GetLastFieldText(): Text
     begin
-        exit(MagicPasteMgt.GetLastFieldText());
+        exit(DirectPasteMgt.GetLastFieldText());
     end;
 
     procedure IsDryRunSuccess(LastErrorText: Text): Boolean

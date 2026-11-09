@@ -1,5 +1,5 @@
 /*!
- * AML Magic Paste - main.js
+ * AML Direct Paste - main.js
  * One script, two modes (set by AL through Init):
  *   paste  - FactBox paste zone. Parses the paste and raises OnDataPasted.
  *   mapper - Dialog with templates, drag-to-link mapping, defaults and preview. Raises OnImportRequested.
@@ -68,19 +68,19 @@
       if (window.Microsoft && Microsoft.Dynamics && Microsoft.Dynamics.NAV) {
         Microsoft.Dynamics.NAV.InvokeExtensibilityMethod(name, args || []);
       } else {
-        console.info('[MagicPaste] ' + name, args);
+        console.info('[DirectPaste] ' + name, args);
       }
     } catch (e) {
-      console.error('[MagicPaste] Could not raise AL event ' + name, e);
+      console.error('[DirectPaste] Could not raise AL event ' + name, e);
     }
   }
 
   function fail(err) {
     var msg = err && err.message ? err.message : String(err);
-    console.error('[MagicPaste]', err);
+    console.error('[DirectPaste]', err);
     S.busy = false;
     try {
-      R().innerHTML = '<div class="mp-root"><div class="mp-crash"><strong>Magic Paste hit a problem.</strong>' +
+      R().innerHTML = '<div class="mp-root"><div class="mp-crash"><strong>Direct Paste hit a problem.</strong>' +
         '<span>' + H.esc(msg) + '</span><button type="button" class="mp-btn" data-act="reset">Reload view</button></div></div>';
     } catch (ignore) { /* nothing more we can do */ }
     invoke('OnError', [msg]);
@@ -104,7 +104,7 @@
   /* ------------------------------------------------------------ AL -> JS API */
 
   window.Init = guard(function (config) {
-    window.AMLMagicPasteInitReceived = true;
+    window.AMLDirectPasteInitReceived = true;
     S.initDone = true;
     S.config = config || {};
     S.mode = S.config.mode === 'mapper' ? 'mapper' : 'paste';
@@ -532,7 +532,7 @@
 
     h += '<header class="mp-head">' +
       '<div class="mp-brand"><span class="mp-logo">' + ICON.spark + '</span><div>' +
-        '<div class="mp-h1">Magic Paste</div>' +
+        '<div class="mp-h1">Direct Paste</div>' +
         '<div class="mp-h2">into <b>' + H.esc(S.config.target || 'Business Central') + '</b>' +
         (hasData ? ' · ' + plural(S.data.length, 'row', 'rows') + ' · ' + plural(S.headers.length, 'column', 'columns') : '') +
         '</div></div></div>' +

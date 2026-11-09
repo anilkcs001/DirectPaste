@@ -1,19 +1,19 @@
 /// <summary>
-/// Magic Paste mapper dialog. Shows the drag-to-link mapper, defaults and preview.
+/// Direct Paste mapper dialog. Shows the drag-to-link mapper, defaults and preview.
 /// OK asks the add-in for the mapping (RequestImport), dry-runs every row, and only when all rows
 /// pass inserts them and closes. If any row fails, the errors are shown and the dialog stays open.
 /// </summary>
-page 87301 "AML Magic Paste Mapper"
+page 87301 "AML Direct Paste Mapper"
 {
     PageType = StandardDialog;
-    Caption = 'Magic Paste';
+    Caption = 'Direct Paste';
     UsageCategory = None;
 
     layout
     {
         area(Content)
         {
-            usercontrol(MagicPaste; "AML Magic Paste Mapper")
+            usercontrol(DirectPaste; "AML Direct Paste Mapper")
             {
                 ApplicationArea = All;
 
@@ -24,7 +24,7 @@ page 87301 "AML Magic Paste Mapper"
 
                 trigger AddInFrameReady()
                 begin
-                    CurrPage.MagicPaste.LoadData(MagicPasteMgt.BuildMapperPayload(TargetTableNo, Context, PastePayload));
+                    CurrPage.DirectPaste.LoadData(DirectPasteMgt.BuildMapperPayload(TargetTableNo, Context, PastePayload));
                 end;
 
                 trigger OnImportRequested(ImportSet: JsonObject)
@@ -41,14 +41,14 @@ page 87301 "AML Magic Paste Mapper"
                 var
                     SavedId: Integer;
                 begin
-                    SavedId := MagicPasteMgt.SaveTemplate(TargetTableNo, Context, Template);
+                    SavedId := DirectPasteMgt.SaveTemplate(TargetTableNo, Context, Template);
                     Commit(); // the dry run later needs no open write transaction
                     SendTemplates(SavedId, TemplateSavedMsg);
                 end;
 
                 trigger OnDeleteTemplate(TemplateId: Integer)
                 begin
-                    MagicPasteMgt.DeleteTemplate(TargetTableNo, TemplateId);
+                    DirectPasteMgt.DeleteTemplate(TargetTableNo, TemplateId);
                     Commit();
                     SendTemplates(0, TemplateDeletedMsg);
                 end;
@@ -60,29 +60,29 @@ page 87301 "AML Magic Paste Mapper"
     begin
         if TargetTableNo = 0 then
             Error(NoTargetErr);
-        CurrPage.Caption := StrSubstNo(PageCaptionTxt, MagicPasteMgt.GetTableCaption(TargetTableNo));
+        CurrPage.Caption := StrSubstNo(PageCaptionTxt, DirectPasteMgt.GetTableCaption(TargetTableNo));
     end;
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     begin
         if (CloseAction = Action::OK) and not ImportDone then begin
             // The add-in answers through OnImportRequested; RunImport closes the page when the import succeeds.
-            CurrPage.MagicPaste.RequestImport();
+            CurrPage.DirectPaste.RequestImport();
             exit(false);
         end;
         exit(true);
     end;
 
     var
-        MagicPasteMgt: Codeunit "AML Magic Paste Mgt.";
+        DirectPasteMgt: Codeunit "AML Direct Paste Mgt.";
         Context: Dictionary of [Integer, Text];
         PastePayload: JsonObject;
         TargetTableNo: Integer;
         InsertedCount: Integer;
         ImportDone: Boolean;
-        NoTargetErr: Label 'Magic Paste needs a target table. Call SetData before opening the mapper.';
-        PageCaptionTxt: Label 'Magic Paste - %1', Comment = '%1 = table caption';
-        AddInErrorMsg: Label 'Magic Paste: %1', Comment = '%1 = error text from the add-in';
+        NoTargetErr: Label 'Direct Paste needs a target table. Call SetData before opening the mapper.';
+        PageCaptionTxt: Label 'Direct Paste - %1', Comment = '%1 = table caption';
+        AddInErrorMsg: Label 'Direct Paste: %1', Comment = '%1 = error text from the add-in';
         TemplateSavedMsg: Label 'Template saved. Everyone in the company can now use it.';
         TemplateDeletedMsg: Label 'Template deleted.';
 
@@ -109,33 +109,33 @@ page 87301 "AML Magic Paste Mapper"
     begin
         Config.Add('mode', 'mapper');
         Config.Add('userId', UserId());
-        Config.Add('target', MagicPasteMgt.GetTableCaption(TargetTableNo));
+        Config.Add('target', DirectPasteMgt.GetTableCaption(TargetTableNo));
         Config.Add('maxRows', 5000);
-        CurrPage.MagicPaste.Init(Config);
+        CurrPage.DirectPaste.Init(Config);
     end;
 
     local procedure SendTemplates(SelectedId: Integer; StatusText: Text)
     var
         Payload: JsonObject;
     begin
-        Payload.Add('templates', MagicPasteMgt.BuildTemplatesJson(TargetTableNo));
+        Payload.Add('templates', DirectPasteMgt.BuildTemplatesJson(TargetTableNo));
         Payload.Add('selectedId', SelectedId);
         Payload.Add('status', StatusText);
-        CurrPage.MagicPaste.LoadTemplates(Payload);
+        CurrPage.DirectPaste.LoadTemplates(Payload);
     end;
 
     local procedure RunImport(ImportSet: JsonObject)
     var
         Errors: JsonArray;
     begin
-        if not MagicPasteMgt.DryRun(TargetTableNo, Context, ImportSet, Errors) then begin
-            CurrPage.MagicPaste.ShowRowErrors(Errors);
+        if not DirectPasteMgt.DryRun(TargetTableNo, Context, ImportSet, Errors) then begin
+            CurrPage.DirectPaste.ShowRowErrors(Errors);
             exit;
         end;
-        InsertedCount := MagicPasteMgt.Import(TargetTableNo, Context, ImportSet);
-        if MagicPasteMgt.IsRememberRequested(ImportSet) then
-            MagicPasteMgt.SaveMapping(TargetTableNo, ImportSet);
-        MagicPasteMgt.MarkTemplateUsed(ImportSet);
+        InsertedCount := DirectPasteMgt.Import(TargetTableNo, Context, ImportSet);
+        if DirectPasteMgt.IsRememberRequested(ImportSet) then
+            DirectPasteMgt.SaveMapping(TargetTableNo, ImportSet);
+        DirectPasteMgt.MarkTemplateUsed(ImportSet);
         ImportDone := true;
         CurrPage.Close();
     end;

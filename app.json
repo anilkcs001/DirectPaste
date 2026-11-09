@@ -1,10 +1,10 @@
 {
   "id": "9ef39d32-4a7b-4fd5-90bd-dbd1ec7f687b",
-  "name": "AML Magic Paste",
+  "name": "AML Direct Paste",
   "publisher": "AML",
   "version": "1.6.0.0",
   "brief": "Paste rows from Excel into any Business Central table with drag-to-link field mapping.",
-  "description": "Magic Paste adds a FactBox where users paste rows copied from Excel or CSV. Columns are matched to fields automatically, can be re-linked by dragging, unmapped fields can get default values, and every row is validated before anything is inserted.",
+  "description": "Direct Paste adds a FactBox where users paste rows copied from Excel or CSV. Columns are matched to fields automatically, can be re-linked by dragging, unmapped fields can get default values, and every row is validated before anything is inserted.",
   "privacyStatement": "",
   "EULA": "",
   "help": "",

@@ -1,13 +1,13 @@
-# AML Magic Paste control add-in
+# AML Direct Paste control add-in
 
 ## Purpose
 
-Browser side of Magic Paste. One script set, two AL definitions:
+Browser side of Direct Paste. One script set, two AL definitions:
 
 | Add-in | Used on | Size |
 |---|---|---|
-| `AML Magic Paste` | Page 87300 "AML Magic Paste FactBox" | 190 px high, for a FactBox |
-| `AML Magic Paste Mapper` | Page 87301 "AML Magic Paste Mapper" | 640 × 1100 px, for the dialog |
+| `AML Direct Paste` | Page 87300 "AML Direct Paste FactBox" | 190 px high, for a FactBox |
+| `AML Direct Paste Mapper` | Page 87301 "AML Direct Paste Mapper" | 640 × 1100 px, for the dialog |
 
 `Init(config)` sets the mode: `paste` shows the paste zone, `mapper` shows the drag-to-link mapper.
 

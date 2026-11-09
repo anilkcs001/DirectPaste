@@ -1,34 +1,34 @@
-/// <summary>Company-wide list of Magic Paste templates. Rename, review or delete them here.</summary>
-page 87302 "AML Magic Paste Templates"
+/// <summary>One Direct Paste template with its field lines.</summary>
+page 87303 "AML Direct Paste Template"
 {
-    PageType = List;
-    Caption = 'Magic Paste Templates';
-    SourceTable = "AML Magic Paste Template";
-    UsageCategory = Lists;
-    ApplicationArea = All;
+    PageType = Card;
+    Caption = 'Direct Paste Template';
+    SourceTable = "AML Direct Paste Template";
+    UsageCategory = None;
     InsertAllowed = false;
-    CardPageId = "AML Magic Paste Template";
 
     layout
     {
         area(Content)
         {
-            repeater(Templates)
+            group(General)
             {
+                Caption = 'General';
+
                 field(Name; Rec.Name)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the template name shown in the Magic Paste mapper.';
+                    ToolTip = 'Specifies the template name shown in the Direct Paste mapper.';
                 }
                 field("Table Caption"; Rec."Table Caption")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the table the template inserts into.';
                 }
-                field("No. of Lines"; Rec."No. of Lines")
+                field("Created By"; Rec."Created By")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies how many fields the template links or defaults.';
+                    ToolTip = 'Specifies who saved the template.';
                 }
                 field("Use Count"; Rec."Use Count")
                 {
@@ -40,11 +40,11 @@ page 87302 "AML Magic Paste Templates"
                     ApplicationArea = All;
                     ToolTip = 'Specifies when the template was last used.';
                 }
-                field("Created By"; Rec."Created By")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies who saved the template.';
-                }
+            }
+            part(Lines; "AML Direct Paste Template Lines")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Template Entry No." = field("Entry No.");
             }
         }
     }
