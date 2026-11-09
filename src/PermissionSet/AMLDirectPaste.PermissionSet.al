@@ -20,5 +20,5 @@ permissionset 87300 "AML Direct Paste"
         page "AML Direct Paste Mapper" = X,
         page "AML Direct Paste Templates" = X,
         page "AML Direct Paste Template" = X,
-        page "AML Direct Paste Template Lines" = X;
+        page "AMLDirect Paste Template Lines" = X;
 }

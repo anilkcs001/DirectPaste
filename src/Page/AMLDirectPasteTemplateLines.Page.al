@@ -1,5 +1,5 @@
 /// <summary>Field lines of a Direct Paste template.</summary>
-page 87304 "AML Direct Paste Template Lines"
+page 87304 "AMLDirect Paste Template Lines"
 {
     PageType = ListPart;
     Caption = 'Fields';

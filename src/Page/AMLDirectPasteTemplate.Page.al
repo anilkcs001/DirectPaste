@@ -41,7 +41,7 @@ page 87303 "AML Direct Paste Template"
                     ToolTip = 'Specifies when the template was last used.';
                 }
             }
-            part(Lines; "AML Direct Paste Template Lines")
+            part(Lines; "AMLDirect Paste Template Lines")
             {
                 ApplicationArea = All;
                 SubPageLink = "Template Entry No." = field("Entry No.");
