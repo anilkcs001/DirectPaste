@@ -1,8 +1,8 @@
 /// <summary>
 /// Direct Paste paste zone, sized for a FactBox.
-/// Shares its scripts and stylesheet with "AML Direct Paste Mapper"; the mode is set through Init().
+/// Shares its scripts and stylesheet with "AK Direct Paste Mapper"; the mode is set through Init().
 /// </summary>
-controladdin "AML Direct Paste"
+controladdin "AK Direct Paste"
 {
     Scripts = 'ControlAddin/scripts/helper.js',
               'ControlAddin/scripts/main.js';

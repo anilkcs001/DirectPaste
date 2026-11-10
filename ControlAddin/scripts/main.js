@@ -1,5 +1,5 @@
 /*!
- * AML Direct Paste - main.js
+ * AK Direct Paste - main.js
  * One script, two modes (set by AL through Init):
  *   paste  - FactBox paste zone. Parses the paste and raises OnDataPasted.
  *   mapper - Dialog with templates, drag-to-link mapping, defaults and preview. Raises OnImportRequested.
@@ -12,7 +12,7 @@
 (function () {
   'use strict';
 
-  var H = window.AMLMP;
+  var H = window.AKMP;
   var PREVIEW_ROWS = 50;
   var MAX_ERRORS_SHOWN = 200;
   var TEMPLATE_MATCH = 0.6;   // share of a template's headers that must be present to auto-apply it
@@ -104,7 +104,7 @@
   /* ------------------------------------------------------------ AL -> JS API */
 
   window.Init = guard(function (config) {
-    window.AMLDirectPasteInitReceived = true;
+    window.AKDirectPasteInitReceived = true;
     S.initDone = true;
     S.config = config || {};
     S.mode = S.config.mode === 'mapper' ? 'mapper' : 'paste';

@@ -1,13 +1,13 @@
 /// <summary>Company-wide list of Direct Paste templates. Rename, review or delete them here.</summary>
-page 87302 "AML Direct Paste Templates"
+page 87302 "AK Direct Paste Templates"
 {
     PageType = List;
     Caption = 'Direct Paste Templates';
-    SourceTable = "AML Direct Paste Template";
+    SourceTable = "AK Direct Paste Template";
     UsageCategory = Lists;
     ApplicationArea = All;
     InsertAllowed = false;
-    CardPageId = "AML Direct Paste Template";
+    CardPageId = "AK Direct Paste Template";
 
     layout
     {

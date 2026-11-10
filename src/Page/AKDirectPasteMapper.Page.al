@@ -3,7 +3,7 @@
 /// OK asks the add-in for the mapping (RequestImport), dry-runs every row, and only when all rows
 /// pass inserts them and closes. If any row fails, the errors are shown and the dialog stays open.
 /// </summary>
-page 87301 "AML Direct Paste Mapper"
+page 87301 "AK Direct Paste Mapper"
 {
     PageType = StandardDialog;
     Caption = 'Direct Paste';
@@ -13,7 +13,7 @@ page 87301 "AML Direct Paste Mapper"
     {
         area(Content)
         {
-            usercontrol(DirectPaste; "AML Direct Paste Mapper")
+            usercontrol(DirectPaste; "AK Direct Paste Mapper")
             {
                 ApplicationArea = All;
 
@@ -74,7 +74,7 @@ page 87301 "AML Direct Paste Mapper"
     end;
 
     var
-        DirectPasteMgt: Codeunit "AML Direct Paste Mgt.";
+        DirectPasteMgt: Codeunit "AK Direct Paste Mgt.";
         Context: Dictionary of [Integer, Text];
         PastePayload: JsonObject;
         TargetTableNo: Integer;

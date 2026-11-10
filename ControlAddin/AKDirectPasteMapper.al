@@ -1,9 +1,9 @@
 /// <summary>
 /// Direct Paste mapper, sized for the modal dialog.
-/// Same scripts, events and procedures as "AML Direct Paste"; only the requested size differs,
+/// Same scripts, events and procedures as "AK Direct Paste"; only the requested size differs,
 /// because a control add-in cannot change its own height at runtime.
 /// </summary>
-controladdin "AML Direct Paste Mapper"
+controladdin "AK Direct Paste Mapper"
 {
     Scripts = 'ControlAddin/scripts/helper.js',
               'ControlAddin/scripts/main.js';

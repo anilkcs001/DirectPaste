@@ -1,10 +1,10 @@
 /*!
- * AML Direct Paste - helper.js
+ * AK Direct Paste - helper.js
  * Pure utilities, no DOM state:
  *   - clipboard parsing (Excel TSV, CSV, quoted cells, multi-line cells)
  *   - value normalisation into AL XML format (Evaluate(FieldRef, Value, 9))
  *   - auto-mapping of pasted headers to Business Central fields
- * Exposed as window.AMLMP.
+ * Exposed as window.AKMP.
  */
 (function (global) {
   'use strict';
@@ -411,7 +411,7 @@
     return wrapped;
   }
 
-  global.AMLMP = {
+  global.AKMP = {
     esc: esc,
     colLetter: colLetter,
     compact: compact,

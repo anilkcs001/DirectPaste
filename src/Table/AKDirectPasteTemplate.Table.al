@@ -1,13 +1,13 @@
 /// <summary>
 /// A named, company-wide Direct Paste template for one target table:
-/// which pasted headers feed which fields, plus default values (lines in "AML Direct Paste Template Line").
+/// which pasted headers feed which fields, plus default values (lines in "AK Direct Paste Template Line").
 /// </summary>
-table 87301 "AML Direct Paste Template"
+table 87301 "AK Direct Paste Template"
 {
     Caption = 'Direct Paste Template';
     DataClassification = CustomerContent;
-    LookupPageId = "AML Direct Paste Templates";
-    DrillDownPageId = "AML Direct Paste Templates";
+    LookupPageId = "AK Direct Paste Templates";
+    DrillDownPageId = "AK Direct Paste Templates";
 
     fields
     {
@@ -54,7 +54,7 @@ table 87301 "AML Direct Paste Template"
         {
             Caption = 'No. of Fields';
             FieldClass = FlowField;
-            CalcFormula = count("AML Direct Paste Template Line" where("Template Entry No." = field("Entry No.")));
+            CalcFormula = count("AK Direct Paste Template Line" where("Template Entry No." = field("Entry No.")));
             Editable = false;
         }
     }
@@ -78,7 +78,7 @@ table 87301 "AML Direct Paste Template"
 
     trigger OnDelete()
     var
-        TemplateLine: Record "AML Direct Paste Template Line";
+        TemplateLine: Record "AK Direct Paste Template Line";
     begin
         TemplateLine.SetRange("Template Entry No.", "Entry No.");
         TemplateLine.DeleteAll();

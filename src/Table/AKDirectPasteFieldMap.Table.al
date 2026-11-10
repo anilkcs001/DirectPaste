@@ -2,7 +2,7 @@
 /// Remembered Direct Paste mapping per user and target table:
 /// which pasted header feeds a field, and the default value for a field.
 /// </summary>
-table 87300 "AML Direct Paste Field Map"
+table 87300 "AK Direct Paste Field Map"
 {
     Caption = 'Direct Paste Field Map';
     DataClassification = CustomerContent;

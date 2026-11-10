@@ -5,13 +5,13 @@
 ///   2. in OnAfterGetCurrRecord, call SetContext(target table, fields the header fixes)
 ///   3. optionally add the action, which opens the mapper directly and refreshes the page afterwards
 /// </summary>
-pageextension 87300 "AML Sales Order Direct Paste" extends "Sales Order"
+pageextension 87300 "AK Sales Order Direct Paste" extends "Sales Order"
 {
     layout
     {
         addfirst(factboxes)
         {
-            part(AMLDirectPaste; "AML Direct Paste FactBox")
+            part(AKDirectPaste; "AK Direct Paste FactBox")
             {
                 ApplicationArea = All;
                 Caption = 'Direct Paste';
@@ -23,7 +23,7 @@ pageextension 87300 "AML Sales Order Direct Paste" extends "Sales Order"
     {
         addlast(processing)
         {
-            action(AMLDirectPasteLines)
+            action(AKDirectPasteLines)
             {
                 ApplicationArea = All;
                 Caption = 'Direct Paste Lines';
@@ -32,7 +32,7 @@ pageextension 87300 "AML Sales Order Direct Paste" extends "Sales Order"
 
                 trigger OnAction()
                 var
-                    Mapper: Page "AML Direct Paste Mapper";
+                    Mapper: Page "AK Direct Paste Mapper";
                     EmptyPaste: JsonObject;
                     Context: Dictionary of [Integer, Text];
                 begin
@@ -52,13 +52,13 @@ pageextension 87300 "AML Sales Order Direct Paste" extends "Sales Order"
         Context: Dictionary of [Integer, Text];
     begin
         GetDirectPasteContext(Context);
-        CurrPage.AMLDirectPaste.Page.SetContext(Database::"Sales Line", Context);
+        CurrPage.AKDirectPaste.Page.SetContext(Database::"Sales Line", Context);
     end;
 
     local procedure GetDirectPasteContext(var Context: Dictionary of [Integer, Text])
     var
         SalesLine: Record "Sales Line";
-        DirectPasteMgt: Codeunit "AML Direct Paste Mgt.";
+        DirectPasteMgt: Codeunit "AK Direct Paste Mgt.";
         RecRef: RecordRef;
     begin
         SalesLine."Document Type" := Rec."Document Type";

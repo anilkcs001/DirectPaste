@@ -1,5 +1,5 @@
 /// <summary>One field of a Direct Paste template: the pasted header that feeds it and/or its default value.</summary>
-table 87302 "AML Direct Paste Template Line"
+table 87302 "AK Direct Paste Template Line"
 {
     Caption = 'Direct Paste Template Line';
     DataClassification = CustomerContent;
@@ -9,7 +9,7 @@ table 87302 "AML Direct Paste Template Line"
         field(1; "Template Entry No."; Integer)
         {
             Caption = 'Template Entry No.';
-            TableRelation = "AML Direct Paste Template"."Entry No.";
+            TableRelation = "AK Direct Paste Template"."Entry No.";
         }
         field(2; "Field No."; Integer)
         {

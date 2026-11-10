@@ -1,8 +1,8 @@
-# AML Direct Paste
+# AK Direct Paste
 
 ## 1. Extension name and purpose
 
-**AML Direct Paste** (Per-Tenant Extension, Business Central 2026 release wave 1 / v28, IN localisation)
+**AK Direct Paste** (Per-Tenant Extension, Business Central 2026 release wave 1 / v28, IN localisation)
 
 Users copy rows from Excel (or a CSV file, or a table on a web page) and paste them into a FactBox. Direct Paste then:
 
@@ -18,30 +18,30 @@ The engine is generic (it works on any table through `RecordRef`). The host page
 
 | ID | Type | Name | Purpose |
 |---|---|---|---|
-| 87300 | Table | AML Direct Paste Field Map | Remembered mapping and defaults per user and target table |
-| 87301 | Table | AML Direct Paste Template | Named, company-wide templates per target table |
-| 87302 | Table | AML Direct Paste Template Line | Template fields: pasted header and/or default value |
-| 87300 | Codeunit | AML Direct Paste Mgt. | Generic engine: field metadata, dry run, insert, saved mappings, templates |
-| 87301 | Codeunit | AML Direct Paste Row Check | Dry run of one row (insert, then forced rollback) |
-| 87300 | Page (CardPart) | AML Direct Paste FactBox | Paste zone; opens the mapper |
-| 87301 | Page (StandardDialog) | AML Direct Paste Mapper | Drag-to-link mapper, templates, defaults, preview, OK = import |
-| 87302 | Page (List) | AML Direct Paste Templates | Review, rename and delete templates (search "Direct Paste Templates") |
-| 87303 | Page (Card) | AML Direct Paste Template | One template with its fields |
-| 87304 | Page (ListPart) | AML Direct Paste Template Lines | Template fields |
-| 87300 | PageExtension | AML Sales Order Direct Paste | Example host on page 42 "Sales Order" |
-| 87300 | PermissionSet | AML Direct Paste | Access to the objects above |
-| n/a | ControlAddIn | AML Direct Paste | Paste zone sized for a FactBox |
-| n/a | ControlAddIn | AML Direct Paste Mapper | Same scripts, sized for the dialog |
+| 87300 | Table | AK Direct Paste Field Map | Remembered mapping and defaults per user and target table |
+| 87301 | Table | AK Direct Paste Template | Named, company-wide templates per target table |
+| 87302 | Table | AK Direct Paste Template Line | Template fields: pasted header and/or default value |
+| 87300 | Codeunit | AK Direct Paste Mgt. | Generic engine: field metadata, dry run, insert, saved mappings, templates |
+| 87301 | Codeunit | AK Direct Paste Row Check | Dry run of one row (insert, then forced rollback) |
+| 87300 | Page (CardPart) | AK Direct Paste FactBox | Paste zone; opens the mapper |
+| 87301 | Page (StandardDialog) | AK Direct Paste Mapper | Drag-to-link mapper, templates, defaults, preview, OK = import |
+| 87302 | Page (List) | AK Direct Paste Templates | Review, rename and delete templates (search "Direct Paste Templates") |
+| 87303 | Page (Card) | AK Direct Paste Template | One template with its fields |
+| 87304 | Page (ListPart) | AK Direct Paste Template Lines | Template fields |
+| 87300 | PageExtension | AK Sales Order Direct Paste | Example host on page 42 "Sales Order" |
+| 87300 | PermissionSet | AK Direct Paste | Access to the objects above |
+| n/a | ControlAddIn | AK Direct Paste | Paste zone sized for a FactBox |
+| n/a | ControlAddIn | AK Direct Paste Mapper | Same scripts, sized for the dialog |
 
 Folder layout:
 
 ```
-AMLDirectPaste/
+AKDirectPaste/
 ├── app.json
 ├── README.md
 ├── ControlAddin/
-│   ├── AMLDirectPaste.al          ← FactBox add-in definition
-│   ├── AMLDirectPasteMapper.al    ← dialog add-in definition (same scripts, larger size)
+│   ├── AKDirectPaste.al          ← FactBox add-in definition
+│   ├── AKDirectPasteMapper.al    ← dialog add-in definition (same scripts, larger size)
 │   ├── README.md
 │   ├── scripts/
 │   │   ├── main.js               ← UI, drag-to-link, AL bridge, lifecycle
@@ -50,12 +50,12 @@ AMLDirectPaste/
 │   └── stylesheets/
 │       └── style.css
 └── src/
-    ├── Codeunit/  AMLDirectPasteMgt.Codeunit.al, AMLDirectPasteRowCheck.Codeunit.al
-    ├── Page/      AMLDirectPasteFactBox.Page.al, AMLDirectPasteMapper.Page.al,
-    │              AMLDirectPasteTemplates.Page.al, AMLDirectPasteTemplate.Page.al, AMLDirectPasteTemplateLines.Page.al
-    ├── PageExt/   AMLSalesOrderDirectPaste.PageExt.al
-    ├── PermissionSet/ AMLDirectPaste.PermissionSet.al
-    └── Table/     AMLDirectPasteFieldMap.Table.al, AMLDirectPasteTemplate.Table.al, AMLDirectPasteTemplateLine.Table.al
+    ├── Codeunit/  AKDirectPasteMgt.Codeunit.al, AKDirectPasteRowCheck.Codeunit.al
+    ├── Page/      AKDirectPasteFactBox.Page.al, AKDirectPasteMapper.Page.al,
+    │              AKDirectPasteTemplates.Page.al, AKDirectPasteTemplate.Page.al, AKDirectPasteTemplateLines.Page.al
+    ├── PageExt/   AKSalesOrderDirectPaste.PageExt.al
+    ├── PermissionSet/ AKDirectPaste.PermissionSet.al
+    └── Table/     AKDirectPasteFieldMap.Table.al, AKDirectPasteTemplate.Table.al, AKDirectPasteTemplateLine.Table.al
 ```
 
 ## 3. Dependencies
@@ -68,10 +68,10 @@ AMLDirectPaste/
 
 1. **Build and publish.** Open the folder in VS Code with the AL Language extension, download symbols for your sandbox, then publish (F5) or build the `.app` (Ctrl+Shift+B).
 2. **Deploy to production.** BC Admin Center → Environments → your environment → Apps → *Upload extension*, or Extension Management → Upload Extension in the client. Choose *Per-Tenant Extension*.
-3. **Permissions.** Assign the permission set **AML Direct Paste** to the users (or to a user group / security group). Users also need their normal insert rights on the target table, for example Sales Line. Direct Paste does not grant those.
+3. **Permissions.** Assign the permission set **AK Direct Paste** to the users (or to a user group / security group). Users also need their normal insert rights on the target table, for example Sales Line. Direct Paste does not grant those.
 4. **Try it.** Open a Sales Order with status Open. In the FactBox pane, click **Paste data here**, press Ctrl+V with some rows copied from Excel, check the links, and press OK.
-5. **Wire it onto another page (optional).** Copy the pattern in `AMLSalesOrderDirectPaste.PageExt.al`:
-   - add `part(...; "AML Direct Paste FactBox")` to the page's FactBoxes;
+5. **Wire it onto another page (optional).** Copy the pattern in `AKSalesOrderDirectPaste.PageExt.al`:
+   - add `part(...; "AK Direct Paste FactBox")` to the page's FactBoxes;
    - in `OnAfterGetCurrRecord`, build a context with `AddContextField` for each field the header fixes, then call `CurrPage.<Part>.Page.SetContext(Database::"<Target Table>", Context)`.
 
    For an Item Journal, for example, the context would be Journal Template Name and Journal Batch Name. Line No. is numbered automatically.
@@ -107,7 +107,7 @@ The per-user **Remember for me** switch still exists; it quietly remembers your 
 
 Values that can't be converted are reported in the preview before anything is sent to AL.
 
-**Dry run (Mgt + Row Check codeunits).** When the user presses OK, `OnQueryClosePage` keeps the dialog open and calls `RequestImport()`. The add-in answers with `OnImportRequested(ImportSet)`. For each row, `AML Direct Paste Row Check` is run with `if not RowCheck.Run()`. Inside, the row is built exactly as the real import does it, then the codeunit raises a fixed sentinel error. The platform rolls back the insert and any tax records written by subscribers. The sentinel means "row OK"; any other error text is that row's problem. Because each run ends in a rollback, no write transaction stays open, which `Codeunit.Run` with a return value requires. Up to 200 errors are collected and shown against their row numbers.
+**Dry run (Mgt + Row Check codeunits).** When the user presses OK, `OnQueryClosePage` keeps the dialog open and calls `RequestImport()`. The add-in answers with `OnImportRequested(ImportSet)`. For each row, `AK Direct Paste Row Check` is run with `if not RowCheck.Run()`. Inside, the row is built exactly as the real import does it, then the codeunit raises a fixed sentinel error. The platform rolls back the insert and any tax records written by subscribers. The sentinel means "row OK"; any other error text is that row's problem. Because each run ends in a rollback, no write transaction stays open, which `Codeunit.Run` with a return value requires. Up to 200 errors are collected and shown against their row numbers.
 
 **Building a record (`ProcessRow`).**
 1. `Init()`.
@@ -138,6 +138,7 @@ Values that can't be converted are reported in the preview before anything is se
 
 | Version | Date | Change |
 |---|---|---|
+| 1.6.1.0 | 2026-11-10 | Object prefix changed from AML to AK (object names, file names, publisher, add-in names). Object IDs and app ID are unchanged, so it installs as an upgrade. |
 | 1.6.0.0 | 2026-10-24 | Document Reader moved to its own app, **AML Document Reader** (IDs 87350–87399). This app is Direct Paste only again: Document Reader objects, add-ins and scripts removed. |
 | 1.2.1.0 | 2026-10-24 | Self-test: the internet check flagged Business Central's own add-in hosting (bc-cdn.dynamics.com and the tenant server). It now takes a snapshot before reading and fails only on new requests to non-Business Central hosts made while reading. |
 | 1.1.0.0 | 2026-10-23 | Templates: save the mapping and defaults under a name, shared company-wide; auto-recognised from pasted headers; template list and card pages. New look for the FactBox and mapper: gradient brand, column letters and type glyphs, animated link lines, progress bar, switches, save popover. |

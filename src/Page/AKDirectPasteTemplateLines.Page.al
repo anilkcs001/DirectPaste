@@ -1,9 +1,9 @@
 /// <summary>Field lines of a Direct Paste template.</summary>
-page 87304 "AMLDirect Paste Template Lines"
+page 87304 "AK Direct Paste Template Lines"
 {
     PageType = ListPart;
     Caption = 'Fields';
-    SourceTable = "AML Direct Paste Template Line";
+    SourceTable = "AK Direct Paste Template Line";
     InsertAllowed = false;
 
     layout

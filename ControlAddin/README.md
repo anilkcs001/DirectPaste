@@ -1,4 +1,4 @@
-# AML Direct Paste control add-in
+# AK Direct Paste control add-in
 
 ## Purpose
 
@@ -6,14 +6,14 @@ Browser side of Direct Paste. One script set, two AL definitions:
 
 | Add-in | Used on | Size |
 |---|---|---|
-| `AML Direct Paste` | Page 87300 "AML Direct Paste FactBox" | 190 px high, for a FactBox |
-| `AML Direct Paste Mapper` | Page 87301 "AML Direct Paste Mapper" | 640 × 1100 px, for the dialog |
+| `AK Direct Paste` | Page 87300 "AK Direct Paste FactBox" | 190 px high, for a FactBox |
+| `AK Direct Paste Mapper` | Page 87301 "AK Direct Paste Mapper" | 640 × 1100 px, for the dialog |
 
 `Init(config)` sets the mode: `paste` shows the paste zone, `mapper` shows the drag-to-link mapper.
 
 ## Files
 
-- `scripts/helper.js`: clipboard parsing, value normalisation to AL XML format, auto-mapping. No DOM state. Exposed as `window.AMLMP`.
+- `scripts/helper.js`: clipboard parsing, value normalisation to AL XML format, auto-mapping. No DOM state. Exposed as `window.AKMP`.
 - `scripts/startup.js`: StartupScript. Raises `ControlAddInReady` once BC has wired the add-in, and once more after 3 seconds if `Init()` has not arrived.
 - `scripts/main.js`: rendering, drag-to-link (pointer events, works with mouse and touch), AL bridge, error boundary, resize and cleanup.
 - `stylesheets/style.css`: styling for both modes.

@@ -1,8 +1,8 @@
 /// <summary>
 /// Direct Paste FactBox. Shows the paste zone; a paste opens the mapper dialog.
-/// The host page tells it where rows go by calling SetContext() (see "AML Sales Order Direct Paste").
+/// The host page tells it where rows go by calling SetContext() (see "AK Sales Order Direct Paste").
 /// </summary>
-page 87300 "AML Direct Paste FactBox"
+page 87300 "AK Direct Paste FactBox"
 {
     PageType = CardPart;
     Caption = 'Direct Paste';
@@ -12,7 +12,7 @@ page 87300 "AML Direct Paste FactBox"
     {
         area(Content)
         {
-            usercontrol(DirectPaste; "AML Direct Paste")
+            usercontrol(DirectPaste; "AK Direct Paste")
             {
                 ApplicationArea = All;
 
@@ -41,7 +41,7 @@ page 87300 "AML Direct Paste FactBox"
     }
 
     var
-        DirectPasteMgt: Codeunit "AML Direct Paste Mgt.";
+        DirectPasteMgt: Codeunit "AK Direct Paste Mgt.";
         Context: Dictionary of [Integer, Text];
         TargetTableNo: Integer;
         AddInReady: Boolean;
@@ -82,7 +82,7 @@ page 87300 "AML Direct Paste FactBox"
 
     local procedure OpenMapper(Payload: JsonObject)
     var
-        Mapper: Page "AML Direct Paste Mapper";
+        Mapper: Page "AK Direct Paste Mapper";
         InsertedCount: Integer;
     begin
         if TargetTableNo = 0 then begin

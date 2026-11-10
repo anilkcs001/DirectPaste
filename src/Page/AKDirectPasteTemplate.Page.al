@@ -1,9 +1,9 @@
 /// <summary>One Direct Paste template with its field lines.</summary>
-page 87303 "AML Direct Paste Template"
+page 87303 "AK Direct Paste Template"
 {
     PageType = Card;
     Caption = 'Direct Paste Template';
-    SourceTable = "AML Direct Paste Template";
+    SourceTable = "AK Direct Paste Template";
     UsageCategory = None;
     InsertAllowed = false;
 
@@ -41,7 +41,7 @@ page 87303 "AML Direct Paste Template"
                     ToolTip = 'Specifies when the template was last used.';
                 }
             }
-            part(Lines; "AMLDirect Paste Template Lines")
+            part(Lines; "AK Direct Paste Template Lines")
             {
                 ApplicationArea = All;
                 SubPageLink = "Template Entry No." = field("Entry No.");
